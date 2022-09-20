@@ -8,7 +8,7 @@
 
         <div v-if="isValidQuestion">
             <h2>{{ question }}</h2>
-            <h1>{{ answer === 'yes' ? 'Si!' : 'No!' }}</h1>
+            <h1>{{ answer === 'yes' ? 'Si!' : 'No!' }}</h1> <!-- si esto devolviese 'Maybe', tambien se traduciría al "No!" -->
         </div>
     </div>
 </template>
@@ -42,7 +42,7 @@ export default {
             if( !value.includes('?') ) return
 
             this.isValidQuestion = true
-            // TODO: Realizar peticion http
+            // Peticion http
             this.getAnswer()
         }
     }
