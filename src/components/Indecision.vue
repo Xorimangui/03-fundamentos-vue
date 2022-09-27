@@ -8,7 +8,7 @@
 
         <div v-if="isValidQuestion">
             <h2>{{ question }}</h2>
-            <h1>{{ answer === 'yes' ? 'Si!' : 'No!' }}</h1> <!-- si esto devolviese 'Maybe', tambien se traduciría al "No!" -->
+            <h1>{{ answer }}</h1> <!-- si esto devolviese 'Maybe', tambien se traduciría al "No!" -->
         </div>
     </div>
 </template>
@@ -24,15 +24,26 @@ export default {
         }
     },
     methods: {
-        async getAnswer(){
-
-            this.answer = 'Pensando...'
-            const { answer, image } = await fetch('https://yesno.wtf/api').then( r => r.json() )
-
-            this.answer = answer
-            this.img = image
-
+        async getAnswer() { 
+            try { 
+                this.answer = 'Pensando...' 
+                const { answer, image } = await fetch('https://yesno.wtf/api').then( r => r.json() ) 
+                this.answer = answer === 'yes' ? 'Si!' : 'No!' 
+                this.img = image 
+            } catch (error) { 
+                console.log('IndecisionComponent: ', error ) 
+                this.answer = 'No se pudo cargar del API' 
+                this.img = null 
+            } 
         }
+
+        //     this.answer = 'Pensando...'
+        //     const { answer, image } = await fetch('https://yesno.wtf/api').then( r => r.json() )
+
+        //     this.answer = answer
+        //     this.img = image
+
+        // }
     },
     watch: {
         question( value, oldValue ){
